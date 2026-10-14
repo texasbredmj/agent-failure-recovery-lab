@@ -73,7 +73,10 @@ HTTP fixture metrics → Prometheus → provisioned Grafana dashboard
 The worker validates a typed request and an allowlisted lab origin, then records legal lifecycle
 transitions in SQLite. It caps execution attempts at three, persists the retry budget, uses bounded
 exponential backoff with jitter, honors bounded Retry-After, and queries a receipt after every attempt.
-A single OS lock prevents concurrent workers using one checkpoint database; process death releases
+Normal execution requests have a one-second deadline; receipt verification has an independent two-second
+budget. Only timeout/latency scenarios use a deliberately short 150ms execution deadline. The worker
+interruption scenario holds the response with a wider request budget so the controller can kill the
+process after observing the commit. A single OS lock prevents concurrent workers using one checkpoint database; process death releases
 the lock. Terminal state and its report commit together. Completed tasks return their saved report.
 
 Reports include recovery success, retry effectiveness, scenario duration/time to recovery, completion

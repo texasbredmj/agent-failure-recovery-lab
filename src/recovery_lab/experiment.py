@@ -97,6 +97,14 @@ def run_suite(
             "--report",
             str(report_path),
         ]
+        # Narrow deadlines belong only to deliberate timeout faults. Give normal service
+        # operations and independent verification enough budget on shared CI runners.
+        request_timeout = (
+            0.15
+            if scenario in {"api_timeout", "delayed_response"}
+            else (10.0 if scenario == "worker_interruption" else 1.0)
+        )
+        command.extend(["--request-timeout", str(request_timeout)])
         mode = {
             "api_timeout": "delay",
             "http_failures": "http500",
@@ -147,7 +155,7 @@ def run_suite(
                 wait_until(lambda db=db, task=task: has_error(db, task.task_id))
                 # DELETE only the toxic created by this experiment.
                 call(toxiproxy, "/proxies/lab/toxics/lab-latency", method="DELETE")
-            process.wait(timeout=15)
+            process.wait(timeout=30)
             if process.returncode not in {0, 1}:
                 raise RuntimeError(
                     f"worker failed unexpectedly; inspect {directory / 'worker.log'}"

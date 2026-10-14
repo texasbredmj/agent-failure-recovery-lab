@@ -35,3 +35,11 @@ CI is configured for six OS/Python fixture jobs and one full-stack job. The down
 scenario outcomes, zero duplicate effects, Prometheus scraping, and the provisioned Grafana dashboard.
 The [portfolio index](https://github.com/texasbredmj/ai-engineering-portfolio) records the latest delivery
 commit and artifact checks. The run above is a historical snapshot for the implementation commit.
+
+A later remote documentation-commit run exposed timing sensitivity: the original 120ms deadline
+was also applied to ordinary fixture calls and independent verification. A Windows dependency case
+therefore correctly escalated an unintended transport ambiguity, and the stack suite had an
+unexpected outcome. Normal execution now has a one-second deadline, verification has two seconds,
+and only deliberately injected timeout faults use 150ms. The crash experiment uses a wider request
+window. CI retains pytest scenario directories and matrix-failure artifacts, with fail-fast disabled.
+Final delivery evidence records the corrected commit and its independently checked CI results.

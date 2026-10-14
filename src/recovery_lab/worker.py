@@ -17,8 +17,10 @@ def verify(data, request):
     return receipt.task_id == request.task_id and receipt.quantity == request.quantity
 
 
-def execute(request: Request, db: Path, url: str, timeout=0.12):
+def execute(request: Request, db: Path, url: str, timeout=1.0):
     url = local_url(url)
+    if not 0.05 <= timeout <= 10:
+        raise ValueError("request timeout must be between 0.05 and 10 seconds")
     with exclusive(db):
         store = Store(db)
         started = time.monotonic()
@@ -65,7 +67,7 @@ def execute(request: Request, db: Path, url: str, timeout=0.12):
                 # Query the receipt independently even after a plausible success response.
                 store.transition(request.task_id, "VERIFYING")
                 try:
-                    evidence = call(url, "/receipt/" + request.task_id, timeout=timeout)
+                    evidence = call(url, "/receipt/" + request.task_id, timeout=2.0)
                     confirmed_absent = evidence["receipt"] is None
                     if evidence["receipt"] and verify(evidence["receipt"], request):
                         verified = True

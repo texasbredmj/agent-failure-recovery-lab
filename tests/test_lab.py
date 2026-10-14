@@ -159,9 +159,19 @@ def test_http_faults_and_recovery(tmp_path, fixture_server, mode, state, attempt
         "/configure",
         {"request": request.model_dump(), "fault": {"mode": mode, "failures": 2}},
     )
-    report = execute(request, tmp_path / "worker.sqlite", fixture_server)
+    report = execute(
+        request,
+        tmp_path / "worker.sqlite",
+        fixture_server,
+        timeout=0.15 if mode == "delay" else 1.0,
+    )
     assert report["state"] == state
     assert report["attempts"] == attempts
+    if mode == "delay":
+        assert any(
+            e["kind"] == "error" and json.loads(e["detail"])["classification"] == "transport"
+            for e in report["history"]
+        )
     backend = call(fixture_server, "/receipt/" + request.task_id)
     assert bool(backend["receipt"]) == (state == "SUCCEEDED")
     assert execute(request, tmp_path / "worker.sqlite", fixture_server) == report
@@ -193,7 +203,7 @@ def test_complete_fault_stack(tmp_path):
         proxy=os.environ.get("LAB_PROXY", "http://127.0.0.1:18661"),
         toxiproxy=os.environ.get("LAB_TOXIPROXY", "http://127.0.0.1:18474"),
     )
-    assert report["verified_demo"] and report["scenario_count"] == 10
+    assert report["verified_demo"] and report["scenario_count"] == 10, json.dumps(report, indent=2)
     assert report["metrics"]["recovered"] == 8
     assert report["metrics"]["failed_safely"] == 1
     assert report["metrics"]["human_required"] == 1
