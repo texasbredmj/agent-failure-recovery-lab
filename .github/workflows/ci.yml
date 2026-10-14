@@ -19,6 +19,7 @@ jobs:
       - run: python -m pip install -r requirements.lock .
       - run: ruff check .
       - run: ruff format --check .
+      - run: python -c "from pathlib import Path; Path('.lab').mkdir(exist_ok=True)"
       - run: python -m pytest -q -m 'not stack' --basetemp=.lab/pytest --junitxml=.lab/tests.xml
       - uses: actions/upload-artifact@v4
         if: failure()
@@ -39,6 +40,7 @@ jobs:
           python-version: '3.12'
       - run: python -m pip install -r requirements.lock .
       - run: docker compose up -d --build
+      - run: python -c "from pathlib import Path; Path('.lab').mkdir(exist_ok=True)"
       - run: python -m pytest -q --basetemp=.lab/pytest --junitxml=.lab/tests.xml
       - run: recovery-lab run --output .lab/demo
       - run: python scripts/verify_observability.py

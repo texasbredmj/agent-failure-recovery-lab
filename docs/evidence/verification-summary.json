@@ -598,7 +598,7 @@
     "requirements.lock": "cba609222fe574083ea925ab45cf54e4c3cbcf4da26db6eab3f00a006497ab21",
     "Dockerfile": "ca84659d600b8c866af6d543e25915786c3bee26271efc4cf08b7aa3d6ef4f45",
     "docker-compose.yml": "16adbb52cca09b1bacc3872999eff85eaf325f2bd85f113e64b15e23bca87a51",
-    ".github/workflows/ci.yml": "2b955ae839164c723c45cc08e8bbb5082ea8629050fd34adf91d7a9fc5b2088f",
+    ".github/workflows/ci.yml": "d569df41baf0c13aa75c68953fd131c696f984dc73bfde3dd72726dae2036f24",
     "observability/prometheus.yml": "ec1a6fccc3a7465e56e4018c604e8dedca366d79b490ae2f6906a70e253b4dd4",
     "observability/dashboards/lab.json": "e0a5213e315be347ec612dda5170e9e9cdea3eb23cb590c7b2a76a773e2e14aa",
     "observability/provisioning/dashboards/lab.yml": "dd6281cc5687cfd541eb299ad9cd1d8be76495c49a4476cf5ea7c9f410b89874",
@@ -660,6 +660,12 @@
     "conclusion": "failure",
     "issue": "Short normal-request/verification deadline caused unintended transport ambiguity; fault suite lacked retained reports.",
     "resolution": "Use one-second normal requests, independent two-second verification, explicit short fault timeouts, wider interruption window, and retained CI diagnostics.",
-    "corrected_remote_ci": "pending; current results are recorded in the portfolio delivery evidence"
+    "corrected_remote_ci": "pending; current results are recorded in the portfolio delivery evidence",
+    "ci_directory_fix": {
+      "run_id": 38502781411,
+      "conclusion": "failure",
+      "issue": "Explicit pytest basetemp requires its .lab parent to exist in a clean checkout.",
+      "resolution": "Create .lab in each CI job before pytest; rehearsed in a fresh Linux working directory, 24 fixture tests passed."
+    }
   }
 }
