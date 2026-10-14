@@ -1,6 +1,6 @@
 # Local verification — October 13, 2026
 
-Project 05 is locally implemented. Both full Windows and Linux suites passed **25 tests, zero failures/errors/skips**. Publication and remote CI require the separate delivery checkpoint.
+Project 05 is locally implemented. Both full Windows and Linux suites passed **25 tests, zero failures/errors/skips**. [Publication CI passed all seven jobs](https://github.com/texasbredmj/agent-failure-recovery-lab/actions/runs/38501915496) at implementation commit `614f137e31cdffe31cfb557b4c9e29024c8a787d`.
 Results are captured in [machine-readable evidence](evidence/verification-summary.json).
 
 The full suite exercises ten real subprocess/HTTP scenarios with the Docker backend, Toxiproxy,
@@ -31,5 +31,7 @@ recover. Scenario duration includes controller and process startup; worker CPU m
 execution section of the final worker process. Database bytes exclude WAL and logs. These are local
 fixture measurements, not production performance or reliability claims.
 
-CI is configured for six OS/Python fixture jobs and one full-stack job. No remote success is claimed
-until a published commit and its artifacts are independently checked.
+CI is configured for six OS/Python fixture jobs and one full-stack job. The downloaded implementation artifact independently confirmed 25 passing tests, all ten expected
+scenario outcomes, zero duplicate effects, Prometheus scraping, and the provisioned Grafana dashboard.
+The [portfolio index](https://github.com/texasbredmj/ai-engineering-portfolio) records the latest delivery
+commit and artifact checks. The run above is a historical snapshot for the implementation commit.

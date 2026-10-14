@@ -5,6 +5,10 @@ network failures, ambiguous responses, or a worker crash. Ten repeatable experim
 receipts, durable checkpoints, error classifications, resource measurements, and recovery reports.
 The lab distinguishes verified recovery, safe failure, and cases requiring human intervention.
 
+Published under [texasbredmj](https://github.com/texasbredmj/agent-failure-recovery-lab).
+[All seven implementation CI jobs passed](https://github.com/texasbredmj/agent-failure-recovery-lab/actions/runs/38501915496).
+Current commit and downloaded evidence are tracked in the [portfolio index](https://github.com/texasbredmj/ai-engineering-portfolio).
+
 ## Install and demonstrate
 
 Requires Python 3.11+ and Docker Compose. From this directory on Windows:

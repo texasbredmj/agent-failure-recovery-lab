@@ -581,7 +581,7 @@
     "cli": "passed",
     "docker_build": "passed",
     "credential_pattern_scan": "passed; limited source/config token/private-key patterns",
-    "remote_ci": "not run; publication pending authorization"
+    "remote_ci": "passed; implementation publication snapshot below"
   },
   "source_hash_basis": "UTF-8 text with LF newlines",
   "source_sha256": {
@@ -609,5 +609,49 @@
     "Unique mock ledger inserts do not prove arbitrary API exactly-once semantics",
     "CPU covers execution in final worker only; checkpoint bytes exclude WAL",
     "No storage-loss or distributed worker recovery test"
-  ]
+  ],
+  "remote_ci_snapshot": {
+    "id": 38501915496,
+    "url": "https://github.com/texasbredmj/agent-failure-recovery-lab/actions/runs/38501915496",
+    "head_sha": "614f137e31cdffe31cfb557b4c9e29024c8a787d",
+    "status": "completed",
+    "conclusion": "success",
+    "jobs": [
+      {
+        "id": 115650614856,
+        "name": "fault-stack",
+        "conclusion": "success"
+      },
+      {
+        "id": 115650615237,
+        "name": "fixture-tests (ubuntu-latest, 3.12)",
+        "conclusion": "success"
+      },
+      {
+        "id": 115650615249,
+        "name": "fixture-tests (ubuntu-latest, 3.14)",
+        "conclusion": "success"
+      },
+      {
+        "id": 115650615267,
+        "name": "fixture-tests (ubuntu-latest, 3.11)",
+        "conclusion": "success"
+      },
+      {
+        "id": 115650615285,
+        "name": "fixture-tests (windows-latest, 3.14)",
+        "conclusion": "success"
+      },
+      {
+        "id": 115650615319,
+        "name": "fixture-tests (windows-latest, 3.11)",
+        "conclusion": "success"
+      },
+      {
+        "id": 115650615352,
+        "name": "fixture-tests (windows-latest, 3.12)",
+        "conclusion": "success"
+      }
+    ]
+  }
 }
